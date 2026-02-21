@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+© 2026 Your Name. All Rights Reserved.
+
+This source code is view-only.
+No license is granted for use, modification, or redistribution.
+-->  
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Twigl Experiments</title>
+
+<style>
+:root {
+  --bg: #0b0d12;
+  --card: #121621;
+  --text: #e8ebf0;
+  --muted: #8b90a0;
+  --accent: #6cf2c2;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: radial-gradient(circle at top, #14192b, var(--bg));
+  color: var(--text);
+}
+
+header {
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 2.2rem;
+  margin: 0 0 0.5rem;
+}
+
+header p {
+  color: var(--muted);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background: linear-gradient(180deg, #151a2d, var(--card));
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.6);
+}
+
+.preview {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview img,
+.preview video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.content {
+  padding: 1rem 1.1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.content h2 {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.content p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  flex-grow: 1;
+}
+
+.actions a {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent), #4fb7ff);
+  color: #00110a;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+.actions a:hover {
+  filter: brightness(1.15);
+  transform: scale(1.03);
+}
+
+footer {
+  text-align: center;
+  padding: 2rem 1rem 3rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Twigl Experiments</h1>
+  <p>Small visual, shader, and generative experiments built in Twigl.</p>
+</header>
+
+<main id="grid"></main>
+
+<footer>
+  Built for rapid code sharing · Powered by Twigl
+</footer>
+
+<script>
+const experiments = [
+  {
+    title: "Holographic Noise Field",
+    description: "Procedural noise + color shift experiments.",
+    link: "https://twigl.app/?ol=true&ss=-Olyr7sb9ok15Vk-vKEz",
+    preview: "previews/holo-noise.webm",
+    type: "video"
+  },
+  {
+    title: "Raymarch Test",
+    description: "Early raymarching distance field tests.",
+    link: "https://twigl.app/?ol=true&ss=YOUR_ID",
+    preview: "previews/raymarch.gif",
+    type: "image"
+  },
+  {
+    title: "Feedback Loop",
+    description: "Screen-space feedback experiment.",
+    link: "https://twigl.app/?ol=true&ss=YOUR_ID",
+    preview: "previews/feedback.jpg",
+    type: "image"
+  }
+];
+
+const grid = document.getElementById("grid");
+
+experiments.forEach(exp => {
+  const card = document.createElement("div");
+  card.className = "card";
+
+  const preview = document.createElement("div");
+  preview.className = "preview";
+
+  if (exp.type === "video") {
+    const video = document.createElement("video");
+    video.src = exp.preview;
+    video.autoplay = true;
+    video.loop = true;
+    video.muted = true;
+    video.playsInline = true;
+    preview.appendChild(video);
+  } else {
+    const img = document.createElement("img");
+    img.src = exp.preview;
+    img.alt = exp.title;
+    preview.appendChild(img);
+  }
+
+  const content = document.createElement("div");
+  content.className = "content";
+
+  content.innerHTML = `
+    <h2>${exp.title}</h2>
+    <p>${exp.description}</p>
+    <div class="actions">
+      <a href="${exp.link}" target="_blank" rel="noopener">Open in Twigl →</a>
+    </div>
+  `;
+
+  card.appendChild(preview);
+  card.appendChild(content);
+  grid.appendChild(card);
+});
+</script>
+
+</body>
+</html>
